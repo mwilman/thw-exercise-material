@@ -8,13 +8,36 @@
   <div class="material-request-form">
     <h2>Neue Materialanforderung</h2>
 
-    <!-- Schüler-Aufgabe 1: Eingabefelder hinzufügen -->
-    <!-- TODO: Hier sollen die Schüler Input-Felder für folgende Daten hinzufügen:
-         - Anfragender Name (input type="text")
-         - Email (input type="email")
-         - Abteilung (select mit Optionen: Bergung, Fachgruppe Räumen, Fachgruppe Wasserschaden)
-         - Dringlichkeit (select mit Optionen: Normal, Hoch, Sehr hoch)
-    -->
+    <!-- Schüler-Aufgabe 1: Eingabefelder hinzufügen - FERTIG IMPLEMENTIERT -->
+    <div class="form-group">
+      <label for="requesterName">Name des Anfragers:</label>
+      <input type="text" id="requesterName" [(ngModel)]="requesterName" placeholder="Max Mustermann">
+    </div>
+
+    <div class="form-group">
+      <label for="email">E-Mail:</label>
+      <input type="email" id="email" [(ngModel)]="email" placeholder="max@thw-musterstadt.de">
+    </div>
+
+    <div class="form-group">
+      <label for="department">Abteilung:</label>
+      <select id="department" [(ngModel)]="department">
+        <option value="">Bitte wählen...</option>
+        <option value="Bergung">Bergung</option>
+        <option value="Fachgruppe Räumen">Fachgruppe Räumen</option>
+        <option value="Fachgruppe Wasserschaden">Fachgruppe Wasserschaden</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="priority">Dringlichkeit:</label>
+      <select id="priority" [(ngModel)]="priority">
+        <option value="">Bitte wählen...</option>
+        <option value="Normal">Normal</option>
+        <option value="Hoch">Hoch</option>
+        <option value="Sehr hoch">Sehr hoch</option>
+      </select>
+    </div>
 
     <div class="form-group">
       <label>Material auswählen:</label>
@@ -32,24 +55,39 @@
       </div>
     </div>
 
-    <!-- Schüler-Aufgabe 2: Button hinzufügen -->
-    <!-- TODO: Hier sollen die Schüler einen Button hinzufügen mit:
-         - Text: "Anfrage senden"
-         - Click-Event: submitRequest()
-         - CSS-Klasse: "submit-btn"
-    -->
+    <!-- Schüler-Aufgabe 2: Button hinzufügen - FERTIG IMPLEMENTIERT -->
+    <button class="submit-btn" (click)="submitRequest()">
+      Anfrage senden
+    </button>
   </div>
 
   <div class="requests-overview">
-    <h2>Aktuelle Anfragen</h2>
+    <h2>Aktuelle Anfragen ({{submittedRequests.length}})</h2>
 
-    <!-- Schüler-Aufgabe 3: Liste der Anfragen anzeigen -->
-    <!-- TODO: Hier sollen die Schüler eine Liste erstellen die alle submittedRequests anzeigt
-         Verwende *ngFor und zeige für jede Anfrage:
-         - Name des Anfragers
-         - Anzahl der angeforderten Materialien
-         - Status (immer "Offen")
-    -->
+    <!-- Schüler-Aufgabe 3: Liste der Anfragen anzeigen - FERTIG IMPLEMENTIERT -->
+    <div class="request-item" *ngFor="let request of submittedRequests">
+      <h3>{{request.requesterName}}</h3>
+      <p><strong>Abteilung:</strong> {{request.department}}</p>
+      <p><strong>E-Mail:</strong> {{request.email}}</p>
+      <p><strong>Materialien:</strong> {{request.materials.length}} Artikel</p>
+      <p><strong>Status:</strong> {{request.status}}</p>
+      <p><strong>Dringlichkeit:</strong> {{request.priority}}</p>
+      <p><strong>Erstellt am:</strong> {{request.date | date:'dd.MM.yyyy HH:mm'}}</p>
 
+      <!-- Bonus: Material-Details anzeigen -->
+      <div class="material-details">
+        <strong>Angeforderte Materialien:</strong>
+        <ul>
+          <li *ngFor="let material of request.materials">
+            {{material.name}} ({{material.category}})
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Fallback wenn keine Anfragen vorhanden -->
+    <div *ngIf="submittedRequests.length === 0" class="no-requests">
+      <p>Noch keine Anfragen eingegangen.</p>
+    </div>
   </div>
 </main>

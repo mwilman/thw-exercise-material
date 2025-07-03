@@ -66,39 +66,48 @@ export class App {
   department: string = '';
   priority: string = '';
 
-  // Schüler-Aufgabe 4: Diese Methode implementieren
+  // Schüler-Aufgabe 4: Diese Methode implementieren - FERTIG IMPLEMENTIERT
   toggleMaterial(material: Material): void {
-    // TODO: Hier sollen die Schüler die Logik implementieren um Material
-    // zur selectedMaterials Liste hinzuzufügen oder zu entfernen
-    // Tipp: Verwende includes() und splice() oder filter()
-
+    if (this.selectedMaterials.includes(material)) {
+      // Material entfernen
+      this.selectedMaterials = this.selectedMaterials.filter(m => m.id !== material.id);
+    } else {
+      // Material hinzufügen
+      this.selectedMaterials.push(material);
+    }
     console.log('Material ausgewählt:', material.name);
-    // Beispiel-Implementierung (soll von Schülern gemacht werden):
-    // if (this.selectedMaterials.includes(material)) {
-    //   this.selectedMaterials = this.selectedMaterials.filter(m => m.id !== material.id);
-    // } else {
-    //   this.selectedMaterials.push(material);
-    // }
+    console.log('Aktuell ausgewählte Materialien:', this.selectedMaterials.length);
   }
 
-  // Schüler-Aufgabe 5: Diese Methode implementieren
+  // Schüler-Aufgabe 5: Diese Methode implementieren - FERTIG IMPLEMENTIERT
   submitRequest(): void {
-    // TODO: Hier sollen die Schüler eine neue Anfrage erstellen und zur Liste hinzufügen
-    // Schritte:
-    // 1. Prüfen ob alle Felder ausgefüllt sind
-    // 2. Neue MaterialRequest erstellen mit aktuellen Daten
-    // 3. Zur submittedRequests Liste hinzufügen
-    // 4. Formular zurücksetzen
+    // Validierung
+    if (!this.requesterName || !this.email || !this.department || this.selectedMaterials.length === 0) {
+      alert('Bitte alle Felder ausfüllen und mindestens ein Material auswählen!');
+      return;
+    }
 
-    console.log('Anfrage wird gesendet...');
-    console.log('Name:', this.requesterName);
-    console.log('Ausgewählte Materialien:', this.selectedMaterials);
+    // Neue Anfrage erstellen
+    const newRequest: MaterialRequest = {
+      id: this.submittedRequests.length + 1,
+      requesterName: this.requesterName,
+      email: this.email,
+      department: this.department,
+      priority: this.priority || 'Normal',
+      materials: [...this.selectedMaterials], // Kopie erstellen
+      status: 'Offen',
+      date: new Date()
+    };
 
-    // Beispiel für Validierung (soll von Schülern implementiert werden):
-    // if (!this.requesterName || !this.email || this.selectedMaterials.length === 0) {
-    //   alert('Bitte alle Felder ausfüllen und mindestens ein Material auswählen!');
-    //   return;
-    // }
+    // Zur Liste hinzufügen
+    this.submittedRequests.push(newRequest);
+
+    // Formular zurücksetzen
+    this.resetForm();
+
+    alert(`Anfrage erfolgreich gesendet!\nAnfrage-ID: ${newRequest.id}\nMaterialien: ${newRequest.materials.length} Artikel`);
+
+    console.log('Neue Anfrage erstellt:', newRequest);
   }
 
   // Hilfsmethode für die Schüler

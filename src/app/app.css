@@ -162,16 +162,23 @@
 /* Request List */
 .request-item {
   border: 1px solid var(--gray-300);
-  border-radius: 6px;
-  padding: 1rem;
+  border-radius: 8px;
+  padding: 1.25rem;
   margin-bottom: 1rem;
-  background-color: #f9f9f9;
+  background-color: white;
+  transition: box-shadow 0.2s ease;
+}
+
+.request-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 61, 165, 0.1);
 }
 
 .request-item h3 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.75rem 0;
   color: #003DA5;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #e0e7ff;
+  padding-bottom: 0.5rem;
 }
 
 .request-item p {
@@ -182,6 +189,79 @@
 
 .request-item p strong {
   color: var(--gray-900);
+}
+
+/* Material Details in Request Items */
+.material-details {
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  background-color: #f0f4ff;
+  border-radius: 4px;
+  border-left: 3px solid #003DA5;
+}
+
+.material-details ul {
+  margin: 0.25rem 0 0 0;
+  padding-left: 1.25rem;
+}
+
+.material-details li {
+  margin-bottom: 0.25rem;
+  color: var(--gray-700);
+  font-size: 0.85rem;
+}
+
+/* No Requests Message */
+.no-requests {
+  text-align: center;
+  padding: 2rem;
+  color: var(--gray-700);
+  font-style: italic;
+}
+
+.no-requests p {
+  font-size: 1.1rem;
+}
+
+/* Priority Badges */
+.priority-normal { background-color: #10b981; }
+.priority-hoch { background-color: #f59e0b; }
+.priority-sehr-hoch { background-color: #ef4444; }
+
+.priority-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Selected Materials Counter */
+.selected-materials-counter {
+  background-color: #003DA5;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+/* Animation for new requests */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.request-item:first-child {
+  animation: slideIn 0.3s ease-out;
 }
 
 /* Responsive Design */
